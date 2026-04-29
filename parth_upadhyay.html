@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parth Upadhyay — CS & Data Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161e;
+      --card: #181c26;
+      --border: #1f2536;
+      --accent: #4f9cf9;
+      --accent2: #a78bfa;
+      --gold: #f5c842;
+      --text: #e8eaf0;
+      --muted: #7c82a0;
+      --faint: #2a2f45;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HERO ── */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .glow-blue  { width: 500px; height: 500px; background: rgba(79,156,249,.15); top: -100px; right: -100px; }
+    .glow-purple{ width: 400px; height: 400px; background: rgba(167,139,250,.1); bottom: 0; left: -80px; }
+
+    .hero-inner {
+      position: relative;
+      max-width: 860px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .15em;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: .3rem .8rem;
+      border-radius: 2px;
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      animation: fadeUp .6s .2s forwards;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      opacity: 0;
+      animation: fadeUp .7s .35s forwards;
+    }
+
+    h1 .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 1.4rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp .7s .5s forwards;
+    }
+
+    .hero-contact {
+      margin-top: 2.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .9rem;
+      opacity: 0;
+      animation: fadeUp .7s .65s forwards;
+    }
+
+    .contact-pill {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .8rem;
+      color: var(--muted);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: .45rem 1rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: color .2s, border-color .2s;
+    }
+    .contact-pill:hover { color: var(--accent); border-color: var(--accent); }
+    .contact-pill svg { width:14px; height:14px; flex-shrink:0; }
+
+    /* ── SECTION LAYOUT ── */
+    main { position: relative; z-index: 1; }
+
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2.4rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    /* ── SUMMARY ── */
+    .summary-text {
+      font-size: 1.1rem;
+      color: #b0b8d0;
+      max-width: 660px;
+      line-height: 1.85;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 2rem 2.2rem;
+      border-radius: 4px;
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .edu-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(79,156,249,.04), transparent);
+      pointer-events: none;
+    }
+    .edu-card:hover { border-color: var(--accent); transform: translateX(4px); }
+
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: .3rem;
+    }
+    .edu-inst {
+      font-family: 'DM Mono', monospace;
+      font-size: .82rem;
+      color: var(--accent);
+      margin-bottom: .8rem;
+    }
+    .edu-year {
+      font-family: 'DM Mono', monospace;
+      font-size: .76rem;
+      color: var(--muted);
+      background: var(--faint);
+      display: inline-block;
+      padding: .2rem .7rem;
+      border-radius: 3px;
+      margin-bottom: 1rem;
+    }
+    .edu-courses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .8rem;
+    }
+    .course-tag {
+      font-size: .75rem;
+      background: var(--faint);
+      color: var(--muted);
+      padding: .25rem .75rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.6rem;
+      transition: border-color .2s;
+    }
+    .skill-group:hover { border-color: var(--accent2); }
+
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: var(--accent2);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .chip {
+      font-size: .8rem;
+      padding: .3rem .8rem;
+      border-radius: 100px;
+      border: 1px solid var(--faint);
+      color: var(--text);
+      background: var(--surface);
+    }
+    .chip.highlight {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── EXTRAS ── */
+    .extra-list { list-style: none; }
+    .extra-list li {
+      display: flex;
+      gap: 1rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .extra-list li:last-child { border-bottom: none; }
+
+    .extra-icon {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background: var(--faint);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .extra-text strong {
+      display: block;
+      font-size: .95rem;
+      margin-bottom: .2rem;
+    }
+    .extra-text span { font-size: .85rem; color: var(--muted); }
+
+    /* ── LANGUAGES ── */
+    .lang-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .lang-row:last-child { border-bottom: none; }
+    .lang-name { font-size: .95rem; }
+    .lang-level {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--muted);
+      background: var(--faint);
+      padding: .2rem .7rem;
+      border-radius: 3px;
+    }
+    .lang-bar {
+      flex: 1;
+      height: 3px;
+      background: var(--faint);
+      margin: 0 1.5rem;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .lang-fill {
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      color: var(--muted);
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 860px;
+      margin: 0 auto;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header>
+  <div class="hero-glow glow-blue"></div>
+  <div class="hero-glow glow-purple"></div>
+
+  <div class="hero-inner">
+    <span class="badge">CS &amp; Data Analytics · JIIT Noida</span>
+    <h1>
+      Parth
+      <span class="line2">Upadhyay</span>
+    </h1>
+    <p class="hero-sub">
+      Computer Science enthusiast — passionate about data analytics, algorithms, and building impactful solutions. Fast learner. Natural leader.
+    </p>
+
+    <div class="hero-contact">
+      <a href="tel:+918882868071" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 013.53 4.18 2 2 0 015.5 2h3a2 2 0 012 1.72c.13 1 .37 1.98.72 2.92a2 2 0 01-.45 2.11L9.91 9.91a16 16 0 006.18 6.18l1.16-.87a2 2 0 012.11-.45c.94.35 1.92.59 2.92.72A2 2 0 0122 16.92z"/></svg>
+        +91 88828 68071
+      </a>
+      <a href="mailto:parth9896upadhyay@gmail.com" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        parth9896upadhyay@gmail.com
+      </a>
+      <a href="#" class="contact-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn Profile
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ═══════════════ SUMMARY ═══════════════ -->
+  <section class="reveal">
+    <div class="section-label">01 · About</div>
+    <p class="summary-text">
+      I'm a first-year B.Sc. Computer Science student at JIIT Noida, driven by curiosity and a love for problem-solving. My core strengths lie in C/C++, Data Structures &amp; Algorithms, and UNIX systems. I'm actively diving into the world of Data Analytics — combining technical rigour with a growth mindset to make meaningful contributions wherever I go.
+    </p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ EDUCATION ═══════════════ -->
+  <section class="reveal">
+    <div class="section-label">02 · Education</div>
+    <div class="edu-card">
+      <div class="edu-degree">B.Sc. in Computer Science</div>
+      <div class="edu-inst">Jaypee Institute of Information Technology (JIIT), Noida</div>
+      <div class="edu-year">2024 – Present</div>
+      <p style="font-size:.88rem; color:var(--muted); margin-bottom:.8rem;">
+        Actively exploring data analytics alongside core CS fundamentals. Engaged with UNIX systems and object-oriented programming.
+      </p>
+      <div class="edu-courses">
+        <span class="course-tag">Data Structures &amp; Algorithms</span>
+        <span class="course-tag">Object-Oriented Programming</span>
+        <span class="course-tag">UNIX Systems</span>
+        <span class="course-tag">Data Analytics (ongoing)</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ SKILLS ═══════════════ -->
+  <section class="reveal">
+    <div class="section-label">03 · Skills</div>
+    <div class="skills-grid">
+
+      <div class="skill-group">
+        <div class="skill-group-title">Programming</div>
+        <div class="skill-chips">
+          <span class="chip highlight">C</span>
+          <span class="chip highlight">C++</span>
+          <span class="chip">UNIX / Shell</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Core CS</div>
+        <div class="skill-chips">
+          <span class="chip">Data Structures</span>
+          <span class="chip">Algorithms</span>
+          <span class="chip">OOP</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Exploring</div>
+        <div class="skill-chips">
+          <span class="chip highlight">Data Analytics</span>
+          <span class="chip">German Language</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title">Soft Skills</div>
+        <div class="skill-chips">
+          <span class="chip">Leadership</span>
+          <span class="chip">Fast Learner</span>
+          <span class="chip">Problem Solving</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ EXTRACURRICULAR ═══════════════ -->
+  <section class="reveal">
+    <div class="section-label">04 · Extracurricular &amp; Interests</div>
+    <ul class="extra-list">
+      <li>
+        <div class="extra-icon">🏀</div>
+        <div class="extra-text">
+          <strong>Basketball &amp; Cricket</strong>
+          <span>Passionate about team sports — basketball courts and cricket pitches are my second home.</span>
+        </div>
+      </li>
+      <li>
+        <div class="extra-icon">🌐</div>
+        <div class="extra-text">
+          <strong>Committee Head — Model United Nations (MUN)</strong>
+          <span>Led committees at school-level MUN, honing diplomacy, public speaking, and strategic thinking.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════ LANGUAGES ═══════════════ -->
+  <section class="reveal">
+    <div class="section-label">05 · Languages</div>
+
+    <div class="lang-row">
+      <span class="lang-name">English</span>
+      <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+      <span class="lang-level">Fluent</span>
+    </div>
+    <div class="lang-row">
+      <span class="lang-name">Hindi</span>
+      <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      <span class="lang-level">Native</span>
+    </div>
+    <div class="lang-row">
+      <span class="lang-name">German</span>
+      <div class="lang-bar"><div class="lang-fill" style="width:20%"></div></div>
+      <span class="lang-level">Learning</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2025 Parth Upadhyay &nbsp;·&nbsp; Built with precision &amp; purpose</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
